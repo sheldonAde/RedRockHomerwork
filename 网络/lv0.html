@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        for(let i=0;i<=2528;i++)
+        {
+            let a=new XMLHttpRequest();
+            let num=i;
+            num.toString();
+            fetch('https://taskapi.chovrio.club/poetry/'+num)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(date){
+                console.log(date);
+            })
+        }
+    </script>
+</body>
+</html>

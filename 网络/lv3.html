@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        fetch('https://taskapi.chovrio.club/chatroom',{
+            method: "get",
+            headers:{
+                Authorization:'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzUsInVzZXJuYW1lIjoic2hlbGRvbkFkZSIsImF2YXRhciI6IiIsImlhdCI6MTY2OTk5NDk2MSwiZXhwIjoxNjcyNTg2OTYxfQ.tKpp2RWDfVGrQxfe1lfbSFvX28-7q_k918hEW3MEil0'
+            }
+            })
+            .then(function(response){
+                return response;
+            })
+            .then(function(date){
+                console.log(date);
+            })
+    </script>
+</body>
+</html>
