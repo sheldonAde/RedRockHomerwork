@@ -1,0 +1,399 @@
+.red {
+    Background-color:#E74543;
+    border-color:#E74543;
+    display:flex;
+    Align-items:center;
+    position: fixed;
+    top:0;
+    width:100%;
+    height:70px;
+}
+.sousuo {
+    margin-left:200px;
+    width:200px;height:40px;
+    Border-radius:8px;
+    Border-color:#DE4140;
+    Background-color:#DE4140;
+    border-style: solid;
+}
+.tou {
+    margin-left:500px;
+    width:40px;
+    height:40px;
+    Font-size:10px;
+    border: 1px solid #DE4140;
+    Border-radius:20px;
+    background-size: 90% 90%;
+}
+.sousuo_anniu {
+    width:70px;
+    height:40px;
+    margin-left:10px;
+    Border-radius:8px;
+    Border-color:#DE4140;
+    Background-color:#DE4140;
+}
+head{
+    margin:0;
+    padding:0px;
+}
+body{
+    margin:0;
+    padding:0px;
+    height:100vh-70px;
+}
+.main {
+    margin-top:70px;
+    height:100%;
+    width:100%;
+}
+.music {
+    display:flex;
+    Flex-direction:column;
+    Align-items:center;
+    position: fixed;
+    bottom:0;
+    height:10vh;
+    width:100%;
+    border-top:1px solid lightgrey;
+    background-color: #fff;
+    z-index:9000;
+}
+
+.login {
+    width:300px;
+    height:600px;
+    position: fixed;
+    border:1px solid lightgrey;
+    top:10%;
+    left:40%;
+    z-index: 9999;
+    background:#fff ;
+    display:none;
+}
+.bg {
+    width:100%;
+    height:100%;
+    position:fixed;
+    top:0;left:0;
+    background: rgb(0,0,0,.4);
+    z-index: 9998;
+    display:none;
+}
+.title {
+    height:45px;text-align:center;
+    line-height:45px;
+    border-bottom: 1px solid lightgrey;
+    position: relative;
+    z-index: 9999;
+}
+.in {
+    text-align:center;
+    line-height:45px;
+}
+.denglu {
+    width:100px;
+    height:50px;
+    border-radius:15px;
+    Font-size:15px;
+}
+.password {
+    height:30px;
+}
+.username {
+    height:30px;
+}
+.close_login {
+    Font-size:3px;
+    z-index: 9999;
+}
+.zhuye_page {
+    display:flex;
+    position:fixed;
+    right:0;
+    height:83vh;
+    width:84.7%;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.bofang_page {
+    display:flex;
+    position:fixed;
+    right:0;
+    height:83vh;
+    width:84.7%;
+    display: none;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.sousuo_page {
+    display:flex;
+    position:fixed;
+    right:0;
+    height:83vh;
+    width:84.7%;
+    display: none;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.guangchang_page {
+    display:flex;
+    position:fixed;
+    right:0;
+    height:83vh;
+    width:84.7%;
+    display: none;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.gedan_page {
+    display:flex;
+    position:fixed;
+    right:0;
+    height:83vh;
+    width:84.7%;
+    display: none;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.resou_page {
+    display:flex;
+    display:none;
+    position:absolute;
+    top:72px;
+    left:370px;
+    height:500px;
+    width:300px;
+    border-radius: 10px;
+    border:1px solid lightgrey;
+    z-index:9998;
+    background-color: #fff;
+    Flex-direction:column;
+    overflow:auto !important;
+    overflow-x: hidden !important;
+}
+.new_song {
+    display:flex;
+    width:100%;
+    height:40px;
+    border-bottom:1px solid lightgrey;
+    font-size:18px;
+    justify-content:space-between;
+    Align-items:center;
+}
+.new_song_start {
+    margin-right:300px;
+    width:40px;
+    height:30px;
+    border: 1px solid lightgrey;
+    border-radius:15px;
+    display: flex; justify-content: center; align-items: center;
+    font-size:5px;
+    background-color:red;
+}
+.new_hot {
+    width:300px;
+    height:50px;
+    font-size:20px;
+    border-bottom:1px solid lightgrey;
+}
+.cebian {
+    display:flex;
+    position:fixed;
+    left:0;
+    margin-top:0px;
+    width:23vh;
+    height:83vh;
+    border-right:1px solid lightgrey;
+    Flex-direction:column;
+    background-color: #fff;
+    z-index:8000;
+    overflow-y: auto;
+}
+.zhuye_page_start {
+    width:100%;
+    height:60px;
+    display: flex; 
+    justify-content: center; align-items: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.guangchang_page_start {
+    width:100%;
+    height:60px;
+    margin-bottom: 10px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 20px;
+}
+.banner {
+    width:100%;
+    margin-bottom: 240px;
+}
+.new_li {
+    position: absolute;
+    left:0px;
+    list-style:none;
+    Transition-duration:0.5s;
+}
+.new_image {
+    height:200px;
+    width:400px;
+}
+.recommend {
+    display:flex;
+    width:100%;
+    height:auto;
+    flex-wrap:wrap;
+}
+.recommend_song {
+    display:flex;
+    width:100%;
+    height:auto;
+    flex-wrap:wrap;
+}
+.new_gedan {
+    margin-left: 100px;
+    height:300px;
+    width:290px;
+    position: relative;
+}
+.new_gedan_num {
+    font-size:small;
+    position: absolute;
+    color:white;
+    top:0;
+    right:0;
+}
+.new_recommend_song {
+    display:flex;
+    Flex-direction:row;
+    Flex-wrap:wrap;
+    width:20%;
+    height:100px;
+    margin-bottom:20px;
+}
+.tag {
+    display:flex;
+    height:auto;
+    width:100%;
+    margin-top:20px;
+}
+.tag_all_button {
+    border:1px solid lightgrey;
+    border-radius: 20px;
+    margin-left:10vh;
+}
+.tag_hot {
+    margin-left:300px;
+    display: flex;
+    height:3em;
+    width:auto;
+}
+.tag_all {
+    display:none;
+    flex-wrap: wrap;
+    position: absolute;
+    Flex-direction:column;
+    top:80px;
+    left:10vh;
+    width:800px;
+    z-index:100;
+    background-color: #fff;
+    height:auto;
+    border:1px solid lightgrey;
+    border-radius: 20px;
+}
+.new_tag_type {
+    width:100%;
+    height:auto;
+    display:flex;
+    flex-wrap: wrap;
+}
+.guangchang_gedan {
+    margin-top:30px;
+    width:100%;
+    height:auto;
+    display:flex;
+    flex-wrap: wrap;
+}
+.love_gedan {
+    height:auto;
+    font-size: small;
+    margin-top:15px;
+}
+.gedan_infor {
+    margin-top:20px;
+    width:100%;
+    height:300px;
+    display: flex;
+}
+.gedan_image {
+    margin-left:20px;
+    margin-right:40px;
+    width:auto;
+    height:100%;
+}
+.gedan_other {
+    height:100%;
+    width:auto;
+    display:flex;
+    Flex-direction:column;
+}
+.gedan_name {
+    font-size:25px;
+}
+.gedan_creator {
+    margin-top:10px;
+    font-size:small;
+    color:grey;
+}
+.gedan_songnum {
+    font-size:small;
+    color:grey;
+}
+.gedan_num {
+    font-size:small;
+    color:grey;
+}
+.gedan_des {
+    margin-top:10px;
+    width:75%;
+}
+.song_start {
+    height:64px;
+    width:70px;
+}
+.song_pre {
+    height:64px;
+    width:70px;
+}
+.song_next {
+    height:64px;
+    width:70px;
+}
+.jindu {
+    margin-top:5px;
+    position: relative;
+    width:450px;
+    height:3px;
+}
+.jindu_now {
+    position: absolute;
+    left:0;
+    width:0;
+    height:100%;
+    background-color: #DE4140;
+    z-index:9100;
+}
+.jindu_zong {
+    position: absolute;
+    left:0;
+    width:100%;
+    background-color:lightgrey;
+    height:100%;
+}

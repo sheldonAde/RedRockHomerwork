@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="red">
+        <img src="image/logo.png" alt="logo class="logo">
+        <input type="text" value="" class="sousuo" placeholder="kick back">
+        <input type="button" class="sousuo_anniu" value="搜索">
+        <input type="button" class="tou" value="登录">
+        <div class="user_name" style="color:white"></div>
+    </div>
+    <div class="main">
+        <div class="cebian">
+            <div style="width:100%;height:auto;">
+                <div class="zhuye_page_start">
+                    发现音乐
+                </div>
+                <div class="guangchang_page_start">
+                    歌单广场
+                </div>
+            </div>
+            <div style="margin-left:25%;width:50%;border-top:1px solid lightgrey;"></div>
+        </div>
+        <div class="resou_page"></div>
+
+        <div class="zhuye_page">
+            <ul class="banner"></ul>
+            <div>
+                <p style="font-size:23px;">推荐歌单:</p>
+                <div class="recommend">
+                </div>
+                <p style="font-size:23px;">最新音乐:</p>
+                <div class="recommend_song">
+                </div>
+            </div>
+        </div>
+        <div class="sousuo_page">
+
+        </div>
+        <div class="gedan_page">
+            <div class="gedan_infor">
+                <div class="gedan_image"><img class="new_ul_image"></div>
+                <div class="gedan_other">
+                    <div class="gedan_name"></div>
+                    <div class="gedan_creator"></div>
+                    <div class="gedan_songnum"></div>
+                    <div class="gedan_num"></div>
+                    <div class="gedan_des"></div>
+                </div>
+            </div>
+            <div class="gedan_song"></div>
+        </div>
+        <div class="bofang_page">
+            
+        </div>
+        <div class="guangchang_page">
+            <div class="tag">
+                <input type="button" class="tag_all_button" value="&emsp;全部标签&emsp;">
+                <div class="tag_all"></div>
+                <div class="tag_hot"></div>
+            </div>
+            <div class="guangchang_gedan"></div>
+        </div>
+    </div>
+    <div class="music">
+        <div class="control">
+            <img src="image/pre.png" class="song_pre">
+            <img src="image/bofang.png" class="song_start">
+            <img src="image/next.png" class="song_next">
+        </div>
+        <div class="jindu">
+            <div class="jindu_now"></div>
+            <div class="jindu_zong"></div>
+        </div>
+    </div>
+
+    <div class="login">
+        <div class="title">
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;邮箱登录 &emsp;&emsp;&emsp;&emsp;&emsp;
+            <a class="close_login">关闭</a>
+        </div>
+        <div class="in">
+            <p>账户：<input type="text" value="" class="username"></p>
+            <p>密码：<input type="text" value="" class="password"></p>
+            <p><button class="denglu">登录</button></p>
+        </div>
+    </div>
+
+
+    <script>
+        var yes=0;
+        var cookie;
+        var search_page = document.querySelector(".sousuo_page")
+        var main_page = document.querySelector(".zhuye_page")
+        var ul_page = document.querySelector(".gedan_page")
+        var bofang_page = document.querySelector(".bofang_page")
+        var guangchang_page = document.querySelector(".guangchang_page")
+        var cebian= document.querySelector(".cebian")
+        //点击头像功能
+        var tou =document.querySelector(".tou");
+        var login =document.querySelector(".login");
+        var bg =document.querySelector(".bg");
+        var close_login =document.querySelector(".close_login");
+        var denglu =document.querySelector(".denglu");
+        var user_name=document.querySelector(".user_name");
+        //侧边栏切换
+        var qiehuan=function(num) { //1切换主页 2切换搜索 3切换歌单广场 4切换歌单详情 5切换播放详情 需要在函数前显示页面
+            if(num!=2){search_page.style.display='none';}
+            if(num!=1){main_page.style.display='none';}
+            if(num!=4){ul_page.style.display='none';}
+            if(num!=5){bofang_page.style.display='none';}
+            if(num!=3){guangchang_page.style.display='none';}
+        }
+        //
+        //歌单详情
+        let gedan_image =document.querySelector('.gedan_image');
+        let gedan_infor =document.querySelector('.gedan_infor');
+        let gedan_creator =document.querySelector('.gedan_creator');
+        let gedan_name =document.querySelector('.gedan_name');
+        let gedan_des =document.querySelector('.gedan_des');
+        let new_ul_image = document.querySelector('.new_ul_image');
+        let gedan_num = document.querySelector('.gedan_num');
+        let gedan_songnum = document.querySelector('.gedan_songnum');
+        var gedan_click=function(click_object){
+            click_object.addEventListener('click',function(){
+                ul_page.style.display='block';
+                qiehuan(4);
+                fetch('https://netease-cloud-music-api-hl.vercel.app/playlist/detail?id='+click_object.id,{
+                    method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    new_ul_image.src=date.playlist.coverImgUrl;
+                    new_ul_image.style.width="320px";
+                    new_ul_image.style.height="280px";
+                    gedan_name.innerHTML=`${date.playlist.name}`;
+                    gedan_creator.innerHTML='创建者:'+`${date.playlist.creator.nickname}`;
+                    gedan_des.innerHTML='简介:'+`${date.playlist.description}`;
+                    gedan_songnum.innerHTML='歌曲:'+`${date.playlist.trackIds.length}`;
+                    gedan_num.innerHTML='播放:'+`${date.playlist.playCount}`;
+                })
+                let gedan_song = document.querySelector('.gedan_song');
+                gedan_song.innerHTML = '';
+                fetch('https://netease-cloud-music-api-hl.vercel.app/playlist/track/all?id='+click_object.id,{
+                    method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    for(let i=0;i<date.songs.length;i++){
+                        let new_song =found_song(date.songs[i].id,date.songs[i].name,date.songs[i].ar[0].name);
+                        bofang_click(new_song.lastChild,click_object.id,i);
+                        gedan_song.appendChild(new_song);
+                    }
+                })
+            })
+        }
+        //
+        tou.addEventListener("click",function() {
+        if(yes==0)//未登录
+        {
+            bg.style.display='block';
+            login.style.display='block';
+            denglu.addEventListener("click",function() {
+                let username= document.querySelector(".username").value;
+                let user_password= document.querySelector(".password").value;
+                fetch('https://netease-cloud-music-api-hl.vercel.app/login?email='+username+'&password='+user_password,{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    if(date.code==200)
+                    {
+                        yes=1;
+                        bg.style.display='none';
+                        login.style.display='none';
+                        var user_date=date;
+                        cookie=date.cookie;
+                        tou_url=date.profile.avatarUrl;
+                        tou.value="";
+                        tou.style.backgroundImage=`url(${date.profile.avatarUrl})`;
+                        user_name.innerHTML=`${date.profile.nickname}`
+                        //添加侧边栏
+                        let love_gedan = document.createElement('div');
+                        love_gedan.innerHTML='我喜欢的音乐';
+                        love_gedan.className='love_gedan';
+                        cebian.appendChild(love_gedan);
+                        fetch('https://netease-cloud-music-api-hl.vercel.app/user/playlist?uid='+user_date.account.id,{
+                            method: "get"
+                        })
+                        .then(function(response){
+                            return response.json();
+                        })
+                        .then(function(date){
+                            console.log(date);
+                            let len=date.playlist.length;
+                            for(let i=1;i<len;i++){
+                                let love_gedan = document.createElement('div');
+                                love_gedan.className='love_gedan';
+                                love_gedan.innerHTML=`${date.playlist[i].name}`;
+                                love_gedan.id=date.playlist[i].id;
+                                gedan_click(love_gedan);
+                                cebian.appendChild(love_gedan);
+                            }
+                        })
+                        //
+                    }
+                })
+            })
+        }
+        else{//已经登陆
+
+        }   
+        })
+        close_login.addEventListener("click",function() {
+            bg.style.display='none';
+            login.style.display='none';
+        })
+        //头像功能
+        //主页
+        var main_start=document.querySelector(".zhuye_page_start");
+        main_start.addEventListener("click",function() {
+            main_page.style.display='block';
+            qiehuan(1);
+            });
+            //轮播图
+            var banner=document.querySelector(".banner");
+            let lunbo_image=new Array();
+            fetch('https://netease-cloud-music-api-hl.vercel.app/banner?type=0',{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    let i=0;
+                    
+                    for(let i=0;i<8;i++){
+                        new_li=document.createElement('li');
+                        new_li.className="new_li";
+                        new_image=document.createElement('img');
+                        new_image=document.createElement('img');
+                        new_image.className = "new_image";
+                        new_image.src=date.banners[i].imageUrl;
+                        new_li.appendChild(new_image);
+                        banner.appendChild(new_li);
+                        lunbo_image.push(new_li);
+                        lunbo_image[i].style.left="300px";
+                    }
+                    lunbo_image[5].style.left="300px";
+                    lunbo_image[6].style.left="500px";
+                    lunbo_image[6].style.zIndex=100;
+                    lunbo_image[6].style.transform="scale(1.3)";
+                    lunbo_image[7].style.left="700px";
+                    let timer=setInterval(next_image,3000);
+                })
+            var next_image=function(){
+                let last=lunbo_image[7];
+                lunbo_image.pop();
+                lunbo_image.unshift(last);
+                for(let i=0;i<8;i++)
+                {
+                    lunbo_image[i].style.zIndex=i;
+                    lunbo_image[i].style.transform="scale(1)";
+                }
+                lunbo_image[5].style.left="300px";
+                lunbo_image[6].style.left="500px";
+                lunbo_image[6].style.zIndex=100;
+                lunbo_image[6].style.transform="scale(1.3)";
+                lunbo_image[7].style.left="700px";
+            }
+            //
+            //推荐歌单与歌曲
+            var recommend_page=document.querySelector(".recommend");
+            fetch('https://netease-cloud-music-api-hl.vercel.app/personalized',{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    for(let i=0;i<9;i++){
+                        new_gedan=document.createElement('div');
+                        new_gedan.id=date.result[i].id;
+                        new_gedan.className="new_gedan";
+                        new_gedan_image=document.createElement('img');
+                        new_gedan_image.src=date.result[i].picUrl;
+                        new_gedan_image.style.width="100%";
+                        new_gedan_image.style.height="80%";
+                        new_gedan_num=document.createElement('div');
+                        new_gedan_num.innerHTML=`${date.result[i].playCount/10000}`+'万';
+                        new_gedan_num.className="new_gedan_num";
+                        new_gedan_name=document.createElement('div');
+                        new_gedan_name.innerHTML=`${date.result[i].name}`;
+                        new_gedan.appendChild(new_gedan_image);
+                        new_gedan.appendChild(new_gedan_num);
+                        new_gedan.appendChild(new_gedan_name);
+                        gedan_click(new_gedan);
+                        recommend_page.appendChild(new_gedan);
+                    }
+                    var recommend_song=document.querySelector(".recommend_song");
+                    fetch('https://netease-cloud-music-api-hl.vercel.app/personalized/newsong',{
+                    method: "get"
+                    })
+                        .then(function(response){
+                            return response.json();
+                        })
+                        .then(function(date){
+                            for(let i=0;i<10;i++)
+                            {
+                                new_recommend_song=document.createElement('div');
+                                new_recommend_song.className=" new_recommend_song";
+                                new_recommend_song_img=document.createElement('img');
+                                new_recommend_song_img.style.height="100%";
+                                new_recommend_song_img.style.width="40%";
+                                new_recommend_song_name=document.createElement('div');
+                                new_recommend_song_name.style.width="60%";
+                                new_recommend_song_img.src=date.result[i].picUrl;
+                                new_recommend_song_name.innerHTML=`${date.result[i].name}`;
+                                new_recommend_br=document.createElement('br');
+                                new_recommend_song_name.appendChild(new_recommend_br);
+                                new_recommend_song_name.innerHTML=new_recommend_song_name.innerHTML.concat(`--${date.result[i].song.artists[0].name}`);
+                                bofang_click(new_recommend_song_img,0,date.result[i].id);
+                                new_recommend_song.appendChild(new_recommend_song_img);
+                                new_recommend_song.appendChild(new_recommend_song_name);
+                                recommend_song.appendChild(new_recommend_song);
+                            }
+                        })
+                })
+            //
+        //
+        //歌单广场
+        //全部分类
+        document.querySelector(".guangchang_page_start").addEventListener("click",function() {
+            guangchang_page.style.display='block';
+            qiehuan(3);
+        })
+            tag_all=document.querySelector(".tag_all");
+            tag_all_button=document.querySelector(".tag_all_button");
+            fetch('https://netease-cloud-music-api-hl.vercel.app/playlist/catlist',{
+                method: "get"
+                })
+                    .then(function(response){
+                        return response.json();
+                    })
+                    .then(function(date){
+                        var tag_all_date=date;
+                        var tag_type=new Array(5);
+                        var new_tag_type=new Array(5);
+                        for(let i=0;i<5;i++){
+                            tag_type[i]=document.createElement("div");
+                            new_tag_type[i]=document.createElement("div");
+                            new_tag_type[i].className="new_tag_type";
+                            tag_type[i].style.width="100%";
+                            tag_type[i].style.height="auto";
+                            tag_type[i].style.display="flex";
+                            tag_type[i].style.flexwrap="wrap";
+                        }
+                        tag_type[0].name="&emsp;语种";
+                        tag_type[1].name="&emsp;风格";
+                        tag_type[2].name="&emsp;场景";
+                        tag_type[3].name="&emsp;情感";
+                        tag_type[4].name="&emsp;主题";
+                        for(let i=0;i<5;i++){
+                            let new_type_name=document.createElement("div");
+                            new_type_name.innerHTML=`${tag_type[i].name}`;
+                            new_type_name.style.height="100%";
+                            new_type_name.style.width="8em";
+                            new_type_name.style.color="lightgrey";
+                            tag_type[i].appendChild(new_type_name);
+                            tag_all.appendChild(tag_type[i]);
+                        }
+                        for(let i=0;i<70;i++){
+                            let new_tag=document.createElement("div");
+                            new_tag.style.height="3.5em";
+                            new_tag.style.width="6em";
+                            new_tag.innerHTML=`${date.sub[i].name}`;
+                            new_tag.addEventListener("click",function() {
+                                qiehuan_guangchang(date.sub[i].name);
+                            });
+                            new_tag_type[date.sub[i].category].appendChild(new_tag);
+                        }
+                        for(let i=0;i<5;i++){tag_type[i].appendChild(new_tag_type[i]);}
+                    })
+                tag_all_button.addEventListener("click",function(e) {
+                    tag_all.style.display='flex';
+                    e.stopPropagation();
+                });
+                tag_all.addEventListener('click',function(e){
+                    e.stopPropagation();
+                });
+                document.addEventListener('click',function(e){
+                    tag_all.style.display = 'none';
+                })
+        //
+        //热门分类
+        var tag_hot=document.querySelector(".tag_hot");
+        fetch('https://netease-cloud-music-api-hl.vercel.app/playlist/hot',{
+            method: "get"
+        })
+        .then(function(response){
+            return response.json();
+        })
+            .then(function(date){
+            for(let i=0;i<10;i++){
+                let new_hot_tag=document.createElement("div");
+                new_hot_tag.innerHTML=`${date.tags[i].name}`;
+                new_hot_tag.style.fontsize="small";
+                new_hot_tag.style.color="grey";
+                new_hot_tag.style.width="100px";
+                new_hot_tag.style.height="25px";
+                new_hot_tag.addEventListener("click",function() {
+                    qiehuan_guangchang(date.tags[i].name);
+                });
+                tag_hot.appendChild(new_hot_tag);
+            }
+        })                        
+        //
+        //歌单栏
+        var guangchang_gedan = document.querySelector(".guangchang_gedan");
+        fetch('https://netease-cloud-music-api-hl.vercel.app/top/playlist/highquality',{
+                method: "get"
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(date){
+                console.log('歌单');
+                console.log(date);
+                for(let i=0;i<48;i++){
+                        new_gedan=document.createElement('div');
+                        new_gedan.id=date.playlists[i].id;
+                        new_gedan.className="new_gedan";
+                        new_gedan_image=document.createElement('img');
+                        new_gedan_image.src=date.playlists[i].coverImgUrl;
+                        new_gedan_image.style.width="100%";
+                        new_gedan_image.style.height="80%";
+                        new_gedan_num=document.createElement('div');
+                        new_gedan_num.innerHTML=`${date.playlists[i].playCount/10000}`+'万';
+                        new_gedan_num.className="new_gedan_num";
+                        new_gedan_name=document.createElement('div');
+                        new_gedan_name.innerHTML=`${date.playlists[i].name}`;
+                        new_gedan.appendChild(new_gedan_image);
+                        new_gedan.appendChild(new_gedan_num);
+                        new_gedan.appendChild(new_gedan_name);
+                        gedan_click(new_gedan);
+                        guangchang_gedan.appendChild(new_gedan);                    
+                }
+            })
+            //切换歌单栏
+            var qiehuan_guangchang=function(gedan_tag){
+                guangchang_gedan.innerHTML=' ';
+            fetch('https://netease-cloud-music-api-hl.vercel.app/top/playlist/highquality?cat="'+`${gedan_tag}`+'"',{
+            method: "get"
+            })
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(date){
+                for(let i=0;i<48;i++){
+                        new_gedan=document.createElement('div');
+                        new_gedan.id=date.playlists[i].id;
+                        new_gedan.className="new_gedan";
+                        new_gedan_image=document.createElement('img');
+                        new_gedan_image.src=date.playlists[i].coverImgUrl;
+                        new_gedan_image.style.width="100%";
+                        new_gedan_image.style.height="80%";
+                        new_gedan_num=document.createElement('div');
+                        new_gedan_num.innerHTML=`${date.playlists[i].playCount/10000}`+'万';
+                        new_gedan_num.className="new_gedan_num";
+                        new_gedan_name=document.createElement('div');
+                        new_gedan_name.innerHTML=`${date.playlists[i].name}`;
+                        new_gedan.appendChild(new_gedan_image);
+                        new_gedan.appendChild(new_gedan_num);
+                        new_gedan.appendChild(new_gedan_name);
+                        gedan_click(new_gedan);
+                        guangchang_gedan.appendChild(new_gedan);                    
+                }
+            })
+            }
+            //
+        //
+        //
+        //歌曲栏
+            var found_song=function(songid,song_name,artists){
+                new_song=document.createElement('div');
+                new_song.songid=songid;
+                new_song.className='new_song';
+                new_song_content=document.createElement('div');
+                new_song_start=document.createElement('div');
+                new_song_start.id=songid;
+                new_song_start.className='new_song_start';
+                new_song_start.innerHTML='播放';
+                new_song_content.innerHTML='&emsp;'+`${song_name}`+'&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-----'+`${artists}`;
+                new_song.appendChild(new_song_content);
+                new_song.appendChild(new_song_start);
+                return new_song;
+            }
+        //
+        //搜索功能
+        var search_start =document.querySelector(".sousuo_anniu");
+        search_start.addEventListener("click",function() {
+            search(document.querySelector(".sousuo").value);
+        })
+        var search=function(search_content){
+            qiehuan(2);
+            search_page.style.display='block';
+            fetch('https://netease-cloud-music-api-hl.vercel.app/search?keywords='+search_content,{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    var pObjs = search_page.childNodes;
+                    for (var i = pObjs.length - 1; i >= 0; i--) {
+                        search_page.removeChild(pObjs[i]);
+                    }
+                    for(var i=0;i<30;i++){
+                        let new_one=found_song(date.result.songs[i].id,date.result.songs[i].name,date.result.songs[i].artists[0].name);
+                        bofang_click(new_one.lastChild,0,date.result.songs[i].id);
+                        search_page.appendChild(new_one);
+                    }
+                })
+        }
+            //热搜
+            let resou_page = document.querySelector(".resou_page");
+            let resou_yes=0;
+            fetch('https://netease-cloud-music-api-hl.vercel.app/search/hot',{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    for(let i=0; i<10;i++){
+                        new_hot=document.createElement('div');
+                        new_hot.className = 'new_hot';
+                        new_hot.innerHTML = `${i+1}`+'&emsp;&emsp;&emsp;'+`${date.result.hots[i].first}`;
+                        resou_page.appendChild(new_hot);
+                        new_hot.onclick = function(){
+                            search(date.result.hots[i].first);
+                        }
+                    }
+                })
+            document.querySelector(".sousuo").addEventListener("click",function() {
+                resou_page.style.display='block';
+                resou_yes=1;
+            });
+            document.addEventListener("click",function(e) {
+                if(resou_yes==1&&(e.clientX<=370||e.clientX>670||e.clientY<=70||e.clientY>571))
+                {
+                    if(e.clientX<410||e.clientX>620||e.clientY<=10||e.clientY>55)
+                    {
+                    resou_yes=0;
+                    resou_page.style.display='none';
+                    } 
+                }
+            });
+            //
+        //
+        //播放音乐
+        var num=0;
+        var now_song = document.createElement("audio");
+        var song_start = document.querySelector(".song_start");
+        var song_next = document.querySelector(".song_next");
+        var song_pre = document.querySelector(".song_pre");
+        var jindu_now = document.querySelector(".jindu_now");
+        var jindu_zong = document.querySelector(".jindu_zong");
+        var song_array_id=new Array();
+        var j=0,len,song_len;
+        var bofang_click =function(e,ul_id,offset){
+            e.addEventListener("click",function(e){
+                song_array_id.length=0;
+                if(ul_id==0){num=0;start=1;bofang_start(offset);}//开始
+                else {
+                fetch('https://netease-cloud-music-api-hl.vercel.app/playlist/track/all?id='+`${ul_id}`+'&offset='+`${offset}`,{
+                    method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                    for(let i=0;i<date.songs.length;i++)
+                    {
+                        song_array_id.push(date.songs[i].id);
+                    }
+                    song_queue();
+                })
+                }
+            })
+        }
+        len=song_array_id.length;
+        let start=0;//0为暂停,1为开始
+        var song_queue=function(){
+            if(j==len+1){return 0;}
+            //下一首开始
+            let now_id=song_array_id[j];
+            start=1;
+            num=0;
+            bofang_start(now_id);
+        }
+        song_pre.addEventListener('click',function(){
+            if(j==0){return 0;}
+            j--;
+            bofang_start(song_array_id[j]);
+        });
+        song_next.addEventListener('click',function(){
+            j++;
+            song_queue();
+        });
+        now_song.addEventListener('ended',function(){
+            j++;
+            song_queue();
+        });
+        song_start.addEventListener('click',function(){
+            if(start==1){//暂停
+                now_song.pause();
+                start=0;
+                song_start.src='image/bofang.png';
+            }
+            else {//继续
+                now_song.play();
+                start=1;
+                jindu_start();
+                song_start.src='image/stop.png';
+            }
+        });
+        var bofang_start =function(song_id){
+            fetch('https://netease-cloud-music-api-hl.vercel.app/lyric/new?id= '+`${song_id}`,{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    console.log(date);
+                })
+            fetch('https://netease-cloud-music-api-hl.vercel.app/song/url?id='+`${song_id}`,{
+                method: "get"
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(date){
+                    now_song.src=date.data[0].url; 
+                    song_len=now_song.duration;
+                    //
+                        jindu_now.width=0;
+                        jindu_start();
+                    //
+                    now_song.play();
+                    song_start.src='image/stop.png';
+                })
+        }
+        var jindu_width=function(){
+            num+=Math.random()*(0.15-0.3)+0.1;
+            jindu_now.style.width=`${num}px`;
+        }
+        var jindu_start =function(){
+            var jindu_timer=setInterval(jindu_width,100);
+            song_start.addEventListener('click',function(){
+                clearInterval(jindu_timer);
+            });
+        }
+        //
+    </script>
+</body>
+</html>
