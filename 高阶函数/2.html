@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input class="in">防抖<br/>
+    <input class="in2">节流<br/>
+    <script>
+        let input = document.querySelector('.in');
+        let timer = null;
+        //防抖
+        function a() {
+            clearTimeout(timer)
+            timer = setTimeout(function () {
+                console.log(input.value)
+            }, 1000)
+        }
+        input.oninput = a;
+        //节流
+        let flg=0;
+        let input2 = document.querySelector('.in2');
+        function b(){
+            if(flg==1){return ;}
+            flg=1;
+            setTimeout(function(){
+                flg=0;
+                console.log(input2.value);
+            },1000)
+        }
+        input2.oninput = b;
+    </script>
+</body>
+
+</html>

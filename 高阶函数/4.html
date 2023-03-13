@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Array.prototype.map=function(fn){
+            let length=this.length;
+            let new_array=new Array(length);
+            for(i=0;i<length;i++){
+                new_array[i]=fn(this[i]);
+            }
+            return new_array;
+        }
+        Array.prototype.filter=function(fn){
+            let length=this.length;
+            let new_array=new Array();
+            for(i=0;i<length;i++){
+                if(fn(this[i]))
+                {
+                    new_array.push(this[i]);
+                }
+            }
+            return new_array;
+        }
+        Array.prototype.reduce=function(fn,startdate){
+            let result,i;
+            if(startdate){
+                i=0;
+                result=startdate;
+            }
+            else{
+                i=1;
+                result=this[0];
+            }
+            for(;i<this.length;i++){
+                result=fn(result,this[i],i);
+            }
+            return result;
+        }
+        let a=[1,2,3,4];
+        let b=a.map(num => num++);
+        console.log(b);
+        b=a.filter(num => num%2==0);
+        console.log(b);
+        b=a.reduce(function(pre,now,index){
+            return pre+now;
+        },);
+        console.log(b);
+    </script>
+</body>
+</html>
